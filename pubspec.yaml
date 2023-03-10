@@ -50,8 +50,7 @@ flutter_icons:
   android: "launcher_icon"
   ios: true
   image_path: "assets/images/smart_friend.png"
-  adaptive_icon_background: "assets/images/Background.jpg"
-  adaptive_icon_foreground: "assets/images/smart_friend.png"
+  adaptive_icon_background: "#FFFFFF"
 
 dev_dependencies:
   flutter_test:

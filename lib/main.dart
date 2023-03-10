@@ -1,3 +1,4 @@
+import 'package:SmartFriend/Screen/startApp/AnimatePage.dart';
 import 'package:SmartFriend/Screen/startApp/StartPage.dart';
 import 'package:flutter/material.dart';
 
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
           errorStyle: TextStyle(height: 0),
         ),
       ),
-      home: const StartPage(),
+      home: const AnimateScreen(),
     );
   }
 }

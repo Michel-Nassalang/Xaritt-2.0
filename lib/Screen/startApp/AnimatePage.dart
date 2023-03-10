@@ -72,7 +72,7 @@ class _AnimateScreenState extends State<AnimateScreen> {
                       child: Column(
                         children: const [
                           Text(
-                            "Salut l'ami Xaritt 2.0!",
+                            "Salut Xaritt 2.0!",
                             style: TextStyle(
                               fontSize: 60,
                               fontWeight: FontWeight.w700,

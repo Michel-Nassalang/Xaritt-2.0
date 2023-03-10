@@ -137,7 +137,7 @@ class _FaceDetectionState extends State<FaceDetection> {
                                       ClipboardData(text: _text));
                                   final snackBar = SnackBar(
                                     duration:
-                                        const Duration(milliseconds: 1500),
+                                        const Duration(milliseconds: 3000),
                                     elevation: 0,
                                     behavior: SnackBarBehavior.floating,
                                     backgroundColor: Colors.transparent,

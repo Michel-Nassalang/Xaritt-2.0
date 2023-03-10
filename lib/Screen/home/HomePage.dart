@@ -3,7 +3,9 @@ import 'package:SmartFriend/Screen/home/components/pageAI.dart';
 import 'package:SmartFriend/Screen/mlkit/detectFace/FaceDetection.dart';
 import 'package:SmartFriend/Screen/mlkit/detectObject/ObjectDetection.dart';
 import 'package:SmartFriend/Screen/mlkit/detectText/TextDetection.dart';
+import 'package:SmartFriend/Screen/mlkit/traductionText/TextTraduction.dart';
 import 'package:SmartFriend/utils/Colors.dart';
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 
 import 'components/RoundedButton.dart';
@@ -44,9 +46,9 @@ class _HomePageState extends State<HomePage> {
                       text: const TextSpan(
                         style: TextStyle(),
                         children: [
-                          TextSpan(text: "What are you \nreading "),
+                          TextSpan(text: "IA \n"),
                           TextSpan(
-                              text: "today?",
+                              text: "Un ami intelligent",
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                               ))
@@ -60,9 +62,9 @@ class _HomePageState extends State<HomePage> {
                     child: Row(
                       children: <Widget>[
                         PageAi(
-                          image: "assets/images/book-1.png",
-                          title: "Crushing & Influence",
-                          auth: "Gary Venchuk",
+                          image: "assets/images/textdetection.png",
+                          title: "Détection de textes",
+                          auth: "IA-Texte",
                           onPress: (){
                             Navigator.push(
                               context,
@@ -73,11 +75,92 @@ class _HomePageState extends State<HomePage> {
                               ),
                             );
                           },
+                          onPressdetails: () {
+                            final snackBar = SnackBar(
+                              duration: const Duration(milliseconds: 5000),
+                              elevation: 0,
+                              behavior: SnackBarBehavior.floating,
+                              backgroundColor: Colors.transparent,
+                              content: AwesomeSnackbarContent(
+                                title: 'Détextion de texte',
+                                message:
+                                    "Cet outil permet la reconnaissance de texte à l'aide des caractères latins. Il analyse la structure du texte et réalise la détection des mots ou éléments, des lignes et des paragraphes",
+                                contentType: ContentType.help,
+                              ),
+                            );
+                            ScaffoldMessenger.of(context)
+                              ..hideCurrentSnackBar()
+                              ..showSnackBar(snackBar);
+                          },
                         ),
                         PageAi(
-                          image: "assets/images/book-2.png",
-                          title: "Top Ten Business Hacks",
-                          auth: "Herman Joel",
+                          image: "assets/images/texttraduction.png",
+                          title: "Traduction de textes",
+                          auth: "IA-Texte",
+                          onPress: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return const TextTraduction();
+                                },
+                              ),
+                            );
+                          },
+                          onPressdetails: () {
+                            final snackBar = SnackBar(
+                              duration: const Duration(milliseconds: 5000),
+                              elevation: 0,
+                              behavior: SnackBarBehavior.floating,
+                              backgroundColor: Colors.transparent,
+                              content: AwesomeSnackbarContent(
+                                title: 'Détextion de texte',
+                                message:
+                                    "Cet outil permet la reconnaissance de texte à l'aide des caractères latins. Il analyse la structure du texte et réalise la détection des mots ou éléments, des lignes et des paragraphes",
+                                contentType: ContentType.help,
+                              ),
+                            );
+                            ScaffoldMessenger.of(context)
+                              ..hideCurrentSnackBar()
+                              ..showSnackBar(snackBar);
+                          },
+                        ),
+                        PageAi(
+                          image: "assets/images/objetdetection.png",
+                          title: "Détection d'objet",
+                          auth: "IA-Objet",
+                          onPress: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return const ObjectDetection();
+                                },
+                              ),
+                            );
+                          },
+                          onPressdetails: () {
+                            final snackBar = SnackBar(
+                              duration: const Duration(milliseconds: 5000),
+                              elevation: 0,
+                              behavior: SnackBarBehavior.floating,
+                              backgroundColor: Colors.transparent,
+                              content: AwesomeSnackbarContent(
+                                title: "Détection d'objet",
+                                message:
+                                    "Grâce à cet outil, vous pouvez détecter et suivre des objets dans un flux d'image.",
+                                contentType: ContentType.help,
+                              ),
+                            );
+                            ScaffoldMessenger.of(context)
+                              ..hideCurrentSnackBar()
+                              ..showSnackBar(snackBar);
+                          },
+                        ),
+                        PageAi(
+                          image: "assets/images/facedetection.png",
+                          title: "Détection de visage",
+                          auth: "IA-Visage",
                           onPress: (){
                             Navigator.push(
                               context,
@@ -87,6 +170,23 @@ class _HomePageState extends State<HomePage> {
                                 },
                               ),
                             );
+                          },
+                          onPressdetails: () {
+                            final snackBar = SnackBar(
+                              duration: const Duration(milliseconds: 5000),
+                              elevation: 0,
+                              behavior: SnackBarBehavior.floating,
+                              backgroundColor: Colors.transparent,
+                              content: AwesomeSnackbarContent(
+                                title: 'Détection de visage',
+                                message:
+                                    "Cet outil permet de reconnaître et localiser les traits du visage d'obtenir les coordonnées des yeux, des oreilles, des joues, du nez et de la bouche de chaque visage détecté.",
+                                contentType: ContentType.help,
+                              ),
+                            );
+                            ScaffoldMessenger.of(context)
+                              ..hideCurrentSnackBar()
+                              ..showSnackBar(snackBar);
                           },
                         ),
                         const SizedBox(width: 30),
@@ -101,12 +201,12 @@ class _HomePageState extends State<HomePage> {
                         RichText(
                           text: const TextSpan(
                             style: TextStyle(
-                              color: backgroundColor2
+                              color: Colors.grey
                             ),
                             children: [
-                              TextSpan(text: "Best of the "),
+                              TextSpan(text: "IA: "),
                               TextSpan(
-                                text: "day",
+                                text: "Xaritt 2.0",
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
                             ],
@@ -117,9 +217,9 @@ class _HomePageState extends State<HomePage> {
                           text: const TextSpan(
                             style: TextStyle(),
                             children: [
-                              TextSpan(text: "Continue "),
+                              TextSpan(text: "Outils: "),
                               TextSpan(
-                                text: "reading...",
+                                text: "Kit Xam-Xam",
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
                             ],
@@ -159,25 +259,25 @@ class _HomePageState extends State<HomePage> {
                                                 CrossAxisAlignment.start,
                                             children: const <Widget>[
                                               Text(
-                                                "Crushing & Influence",
+                                                "Xam-Xam",
                                                 style: TextStyle(
                                                   fontWeight: FontWeight.bold,
                                                 ),
                                               ),
                                               Text(
-                                                "Gary Venchuk",
+                                                "Paquets d'outils",
                                                 style: TextStyle(
-                                                  color: backgroundColorLight,
+                                                  color: Colors.grey,
                                                 ),
                                               ),
                                               Align(
                                                 alignment:
                                                     Alignment.bottomRight,
                                                 child: Text(
-                                                  "Chapter 7 of 10",
+                                                  "Améliorer vos rendus",
                                                   style: TextStyle(
                                                     fontSize: 10,
-                                                    color: backgroundColorLight,
+                                                    color: Colors.grey,
                                                   ),
                                                 ),
                                               ),
@@ -186,7 +286,7 @@ class _HomePageState extends State<HomePage> {
                                           ),
                                         ),
                                         Image.asset(
-                                          "assets/images/book-1.png",
+                                          "assets/images/mr_bean.png",
                                           width: 55,
                                         )
                                       ],
@@ -229,58 +329,70 @@ class _HomePageState extends State<HomePage> {
             bottom: 0,
             left: 0,
             right: 0,
-            child: Container(
-              padding: EdgeInsets.only(
-                left: 24,
-                top: 24,
-                right: size.width * .35,
-              ),
-              height: 230,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: Color.fromARGB(255, 221, 220, 220).withOpacity(.25),
-                borderRadius: BorderRadius.circular(29),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Container(
-                    margin: const EdgeInsets.only(top: 10.0, bottom: 10.0),
-                    child: const Text(
-                      "New York Time Best For 11th March 2020",
-                      style: TextStyle(
-                        fontSize: 9,
-                        color: backgroundColorLight,
+            child: GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return const ChatGptScreen();
+                    },
+                  ),
+                );
+              },
+              child: Container(
+                padding: EdgeInsets.only(
+                  left: 24,
+                  top: 24,
+                  right: size.width * .35,
+                ),
+                height: 230,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Color.fromARGB(255, 221, 220, 220).withOpacity(.25),
+                  borderRadius: BorderRadius.circular(29),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Container(
+                      margin: const EdgeInsets.only(top: 10.0, bottom: 10.0),
+                      child: const Text(
+                        "Recupérer l'important dans nos informations",
+                        style: TextStyle(
+                          fontSize: 9,
+                          color: backgroundColorLight,
+                        ),
                       ),
                     ),
-                  ),
-                  const Text(
-                    "How To Win \nFriends &  Influence",
-                    style: TextStyle(),
-                  ),
-                  const Text(
-                    "Gary Venchuk",
-                    style: TextStyle(color: backgroundColorLight),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10, bottom: 10.0),
-                    child: Row(
-                      children: const <Widget>[
-                        Expanded(
-                          child: Text(
-                            "When the earth was flat and everyone wanted to win the game of the best and people….",
-                            maxLines: 3,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              fontSize: 10,
-                              color: backgroundColorLight,
+                    const Text(
+                      "Gagner en productivité avec votre ami intelligent",
+                      style: TextStyle(),
+                    ),
+                    const Text(
+                      "Xaritt 2.0",
+                      style: TextStyle(color: backgroundColorLight),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10, bottom: 10.0),
+                      child: Row(
+                        children: const <Widget>[
+                          Expanded(
+                            child: Text(
+                              "Demandez tous ce que vous voudrez et nous vous apporterons une réponse pertinente.",
+                              maxLines: 3,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                fontSize: 10,
+                                color: backgroundColorLight,
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
@@ -288,8 +400,8 @@ class _HomePageState extends State<HomePage> {
             right: 0,
             top: 0,
             child: Image.asset(
-              "assets/images/book-3.png",
-              width: size.width * .37,
+              "assets/images/smart_friend.png",
+              width: size.width * .45,
             ),
           ),
           Positioned(
@@ -299,7 +411,7 @@ class _HomePageState extends State<HomePage> {
               height: 40,
               width: size.width * .3,
               child: RoundedButton(
-                text: "Read",
+                text: "voir  IA",
                 radious: 24,
                 press: () {
                   Navigator.push(

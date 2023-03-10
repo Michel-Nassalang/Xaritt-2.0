@@ -110,7 +110,7 @@ class _ObjectDetectionState extends State<ObjectDetection> {
                                   await Clipboard.setData(
                                       ClipboardData(text: imageLabel));
                                   final snackBar = SnackBar(
-                                    duration: const Duration(milliseconds: 1500),
+                                    duration: const Duration(milliseconds: 3000),
                                     elevation: 0,
                                     behavior: SnackBarBehavior.floating,
                                     backgroundColor: Colors.transparent,

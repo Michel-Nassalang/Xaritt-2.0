@@ -115,7 +115,7 @@ class _TextDetectionState extends State<TextDetection> {
                                     await Clipboard.setData(
                                         ClipboardData(text: scannedText));
                                     final snackBar = SnackBar(
-                                    duration: const Duration(milliseconds: 1500),
+                                    duration: const Duration(milliseconds: 3000),
                                     elevation: 0,
                                     behavior: SnackBarBehavior.floating,
                                     backgroundColor: Colors.transparent,

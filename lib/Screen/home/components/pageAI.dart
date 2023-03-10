@@ -10,6 +10,7 @@ class PageAi extends StatelessWidget {
   final String title;
   final String? auth;
   final VoidCallback onPress;
+  final VoidCallback onPressdetails;
 
   const PageAi({
     Key? key,
@@ -17,6 +18,7 @@ class PageAi extends StatelessWidget {
     required this.title,
     this.auth,
     required this.onPress,
+    required this.onPressdetails,
   }) : super(key: key);
 
   @override
@@ -31,24 +33,34 @@ class PageAi extends StatelessWidget {
             bottom: 0,
             left: 0,
             right: 0,
-            child: Container(
-              height: 221,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(29),
-                boxShadow: [
-                  BoxShadow(
-                    offset: Offset(0, 10),
-                    blurRadius: 33,
-                    color: backgroundColor2.withOpacity(0.5),
-                  ),
-                ],
+            child: GestureDetector(
+              onTap: onPress,
+              child: Container(
+                height: 221,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(29),
+                  boxShadow: [
+                    BoxShadow(
+                      offset: const Offset(0, 10),
+                      blurRadius: 33,
+                      color: backgroundColor2.withOpacity(0.5),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
-          Image.asset(
-            image,
-            width: 150,
+          GestureDetector(
+            onTap: onPress,
+            child: SizedBox(
+              width: 150,
+              height: 165,
+              child: Image.asset(
+                image,
+                width: 150,
+              ),
+            ),
           ),
           Positioned(
             top: 35,
@@ -56,8 +68,8 @@ class PageAi extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 IconButton(
-                  icon: Icon(
-                    Icons.favorite_border,
+                  icon: const Icon(
+                    Icons.travel_explore_outlined,
                   ),
                   onPressed: () {},
                 ),
@@ -72,26 +84,29 @@ class PageAi extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(left: 24),
-                    child: RichText(
-                      maxLines: 2,
-                      text: TextSpan(
-                        style: const TextStyle(color: backgroundColor2),
-                        children: [
-                          TextSpan(
-                            text: "$title\n",
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
+                  GestureDetector(
+                    onTap: onPress,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 24),
+                      child: RichText(
+                        maxLines: 2,
+                        text: TextSpan(
+                          style: const TextStyle(color: backgroundColor2),
+                          children: [
+                            TextSpan(
+                              text: "$title\n",
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
-                          TextSpan(
-                            text: auth,
-                            style: const TextStyle(
-                              color: backgroundColor2,
+                            TextSpan(
+                              text: auth,
+                              style: const TextStyle(
+                                color: backgroundColor2,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -99,17 +114,17 @@ class PageAi extends StatelessWidget {
                   Row(
                     children: <Widget>[
                       GestureDetector(
-                        onTap: onPress,
+                        onTap: onPressdetails,
                         child: Container(
                           width: 101,
-                          padding: EdgeInsets.symmetric(vertical: 10),
+                          padding: const EdgeInsets.symmetric(vertical: 10),
                           alignment: Alignment.center,
-                          child: Text("Details"),
+                          child: const Text("Details"),
                         ),
                       ),
                       Expanded(
                         child: RoundedButton(
-                          text: "Read",
+                          text: "Voir",
                           press: onPress,
                         ),
                       )

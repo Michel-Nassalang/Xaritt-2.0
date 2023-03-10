@@ -52,10 +52,11 @@ class _ChatScreenState extends State<ChatScreen> {
         backgroundColor: backgroundColor2,
         elevation: 2,
         leading: BackButton(
-            onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context)=> const StartPage()));
-            },
-          ),
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const StartPage()));
+          },
+        ),
         title: Row(
           children: [
             Padding(
@@ -63,7 +64,8 @@ class _ChatScreenState extends State<ChatScreen> {
               child: CircleAvatar(
                 backgroundColor: backgroundColorLight,
                 radius: 24,
-              backgroundImage: AssetImage(AssetsManager.botImage),),
+                backgroundImage: AssetImage(AssetsManager.botImage),
+              ),
             ),
             const Text("Xaritt"),
           ],
@@ -247,10 +249,7 @@ class _ChatScreenState extends State<ChatScreen> {
       });
       await chatProvider.sendMessageAndGetAnswers(
           msg: msg, chosenModelId: modelsProvider.getCurrentModel);
-      // chatList.addAll(await ApiService.sendMessage(
-      //   message: textEditingController.text,
-      //   modelId: modelsProvider.getCurrentModel,
-      // ));
+      
       setState(() {});
     } catch (error) {
       log("error $error");
@@ -263,8 +262,7 @@ class _ChatScreenState extends State<ChatScreen> {
           backgroundColor: Colors.transparent,
           content: AwesomeSnackbarContent(
             title: "Erreur",
-            message:
-                "Impossible d'accéder au modèle d'IA.",
+            message: "Impossible d'accéder au modèle d'IA.",
             contentType: ContentType.failure,
           ),
         ));

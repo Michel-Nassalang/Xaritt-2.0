@@ -9,6 +9,9 @@ import '../models/chatgpt/chat_model.dart';
 import '../models/chatgpt/models_model.dart';
 
 class ApiService {
+
+  //----------------------------------------------------------------
+  // Recupérer la liste des modèles de chat répondant
   static Future<List<ModelsModel>> getModels() async {
     try {
       var response = await http.get(
@@ -34,9 +37,9 @@ class ApiService {
       rethrow;
     }
   }
-  static final urlImage = "https://api.openai.com/v1/images/generations";
 
-  // Send Message fct
+  //----------------------------------------------------------------
+  // Envoyer une question et recupérer une reponse
   static Future<List<ChatModel>> sendMessage(
       {required String message, required String modelId}) async {
     try {
@@ -79,4 +82,98 @@ class ApiService {
       rethrow;
     }
   }
+
+
+  //------------------------------------------------------------
+  // Donner un texte et recevoir un audio
+
+  static Future<String> getAudio(String text) async {
+    final response = await http.post(
+      Uri.parse('$BASE_URL/speeches/generate'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $API_KEY',
+      },
+      body: jsonEncode({'text': text}),
+    );
+
+    if (response.statusCode == 200) {
+      final result = jsonDecode(response.body);
+      final audioUrl = result['data'][0]['url'];
+
+      final bytes = await http.readBytes(Uri.parse(audioUrl));
+      final file = File('${Directory.systemTemp.path}/audio.mp3');
+      await file.writeAsBytes(bytes);
+
+      return file.path;
+    } else {
+      throw Exception("Echec pour l'obtention de l'image");
+    }
+  }
+
+  //----------------------------------------------------------------
+  // Générer une image à partir d'un texte
+  static Future<List<ChatModel>> generateImage(String prompt) async {
+    final response = await http.post(Uri.parse('$BASE_URL/images/generations'), headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $API_KEY',
+    }, body: json.encode({
+      'model': 'image-alpha-001',
+      'prompt': prompt,
+      'num_images': 1,
+      'size': '512x512',
+    }));
+
+    if (response.statusCode != 200) {
+      throw Exception("Echec sur la génération d'image");
+    }
+
+    final data = json.decode(response.body)['data'][0];
+    // return data['url'];
+    List<ChatModel> chatList = [];
+    chatList = List.generate(
+      json.decode(response.body)['data'].length,
+      (index) => ChatModel(
+        msg: data['url'],
+        chatIndex: 2,
+      ),
+    );
+    return chatList;
+  }
+
+  //----------------------------------------------------------------
+  // Génerer une image à partir d'un autre image
+  static Future<List<ChatModel>> generateImageImage(String imageBytes) async {
+    final response = await http.post(Uri.parse('$BASE_URL/images/generations'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $API_KEY',
+        },
+        body: json.encode({
+          'model': 'image-alpha-001',
+          'source': imageBytes,
+          'num_images': 1,
+          'size': '512x512',
+        }));
+
+    if (response.statusCode != 200) {
+      throw Exception('Failed to generate image');
+    }
+
+    final data = json.decode(response.body)['data'][0];
+    // return data['url'];
+    List<ChatModel> chatList = [];
+    chatList = List.generate(
+      json.decode(response.body)['data'].length,
+      (index) => ChatModel(
+        msg: data['url'],
+        chatIndex: 3,
+      ),
+    );
+    return chatList;
+  }
 }
+
+
+//----------------------------------------------------------------
+// G

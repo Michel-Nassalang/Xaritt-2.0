@@ -22,4 +22,13 @@ class ChatProvider with ChangeNotifier {
     ));
     notifyListeners();
   }
+
+  Future<void> sendMessageAndGetImages({required String msg}) async {
+    chatList.addAll(await ApiService.generateImage(msg));
+    notifyListeners();
+  }
+  Future<void> sendImageAndGetImages({required String imagepath}) async {
+    chatList.addAll(await ApiService.generateImageImage(imagepath));
+    notifyListeners();
+  }
 }
