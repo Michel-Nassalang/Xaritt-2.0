@@ -54,7 +54,7 @@ class ApiService {
           {
             "model": modelId,
             "prompt": message,
-            "max_tokens": 2048,
+            "max_tokens": 300,
           },
         ),
       );
@@ -121,7 +121,7 @@ class ApiService {
       'model': 'image-alpha-001',
       'prompt': prompt,
       'num_images': 1,
-      'size': '512x512',
+      'size': '1024x1024',
     }));
 
     if (response.statusCode != 200) {

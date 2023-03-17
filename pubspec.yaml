@@ -102,7 +102,7 @@ flutter:
     - family: Poppins
       fonts:
         - asset: assets/Fonts/Poppins-Bold.ttf
-          weight: 700
+          weight: 400
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

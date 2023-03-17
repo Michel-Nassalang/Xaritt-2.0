@@ -11,6 +11,7 @@ import '../../providers/chats_provider.dart';
 import '../../providers/models_provider.dart';
 import '../../services/assets_manager.dart';
 import '../../services/services.dart';
+import '../../widgets/expandable.dart';
 import '../../widgets/widget_gpt/chat_widget.dart';
 
 class ChatScreen extends StatefulWidget {
@@ -26,6 +27,9 @@ class _ChatScreenState extends State<ChatScreen> {
   late TextEditingController textEditingController;
   late ScrollController _listScrollController;
   late FocusNode focusNode;
+  late int askQuestionType = 1;
+  
+  late bool isOpened = false;
   @override
   void initState() {
     _listScrollController = ScrollController();
@@ -109,7 +113,7 @@ class _ChatScreenState extends State<ChatScreen> {
               ],
               Container(
                 padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
+                  horizontal: 15,
                   vertical: 20 / 2,
                 ),
                 decoration: const BoxDecoration(
@@ -130,6 +134,7 @@ class _ChatScreenState extends State<ChatScreen> {
                           onTap: () {
                             setState(() {
                               if (!focusNode.hasFocus) {
+                                isOpened = false;
                                 focusNode.requestFocus();
                               }
                             });
@@ -137,23 +142,31 @@ class _ChatScreenState extends State<ChatScreen> {
                           child: Container(
                             height: 40,
                             padding: const EdgeInsets.symmetric(
-                              horizontal: 20 * 0.75,
+                              horizontal: 10 * 0.75,
                             ),
                             decoration: BoxDecoration(
                               color: Colors.blue.withOpacity(0.1),
                               borderRadius: BorderRadius.circular(40),
                             ),
                             child: Center(
-                              child: TextField(
+                              child: TextFormField(
                                 minLines: 1,
                                 maxLines: 5,
                                 focusNode: focusNode,
                                 style: const TextStyle(color: Colors.white),
                                 controller: textEditingController,
-                                onSubmitted: (value) async {
+                                onFieldSubmitted: (value) async {
                                   await sendMessageFCT(
                                       modelsProvider: modelsProvider,
                                       chatProvider: chatProvider);
+                                },
+                                onTap: () {
+                                  isOpened = false;
+                                },
+                                onTapOutside: (event){
+                                  setState(() {
+                                    focusNode.unfocus();
+                                  });
                                 },
                                 decoration: const InputDecoration.collapsed(
                                     hintText: "Comment puis je t'aider",
@@ -163,7 +176,27 @@ class _ChatScreenState extends State<ChatScreen> {
                           ),
                         ),
                       ),
-                      const SizedBox(width: 10),
+                      const SizedBox(width: 8),
+                      IconButton(
+                          icon: Icon(
+                            isOpened ? 
+                            Icons.close 
+                            : Icons.attach_file,
+                            color: Colors.white
+                                .withOpacity(0.64),
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              focusNode.unfocus();
+                              isOpened = !isOpened;
+                            });
+                          },
+                          padding: const EdgeInsets.symmetric(horizontal: 0),
+                          constraints: const BoxConstraints(
+                            minWidth: 26,
+                            minHeight: kMinInteractiveDimension,
+                          )),
+                      const SizedBox(width: 8),
                       Container(
                         height: 40,
                         width: 40,
@@ -179,7 +212,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                   chatProvider: chatProvider);
                             },
                             icon: const Icon(
-                              Icons.send,
+                               Icons.send ,
                               color: Colors.white,
                             )),
                       )
@@ -191,6 +224,40 @@ class _ChatScreenState extends State<ChatScreen> {
           ),
         ),
       ),
+      floatingActionButton: Padding(padding: const EdgeInsets.only(bottom: 55), 
+      child: isOpened
+              ? Row(children: [
+                  const Expanded(child: Padding(padding: EdgeInsets.zero)),
+                  ExpandableFab(distance: 170, children: [
+                    ActionButton(
+                        icon:
+                            const Icon(Icons.text_fields , color: Colors.white),
+                        onPressed: ()  {
+                          setState(() {
+                            askQuestionType = 1;
+                          });
+                        }),
+                    const Padding(padding: EdgeInsets.only(bottom: 5)),
+                    ActionButton(
+                        icon: const Icon(Icons.image, color: Colors.white),
+                        onPressed: () {
+                          setState(() {
+                            askQuestionType = 2;
+                          });
+                        }),
+                    const Padding(padding: EdgeInsets.only(bottom: 5)),
+                    ActionButton(
+                        icon: const Icon(Icons.audiotrack, color: Colors.white),
+                        onPressed: () {
+                          setState(() {
+                            askQuestionType = 3;
+                          });
+                        }),
+                  ]),
+                ])
+              : const Padding(padding: EdgeInsets.zero),
+        )
+      
     );
   }
 
@@ -247,8 +314,10 @@ class _ChatScreenState extends State<ChatScreen> {
         textEditingController.clear();
         focusNode.unfocus();
       });
-      await chatProvider.sendMessageAndGetAnswers(
-          msg: msg, chosenModelId: modelsProvider.getCurrentModel);
+      askQuestionType==1 ?
+       await chatProvider.sendMessageAndGetAnswers(
+          msg: msg, chosenModelId: modelsProvider.getCurrentModel)
+      :await chatProvider.sendMessageAndGetImages(msg: msg);
       
       setState(() {});
     } catch (error) {
