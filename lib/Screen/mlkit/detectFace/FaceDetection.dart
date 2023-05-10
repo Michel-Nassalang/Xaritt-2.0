@@ -4,9 +4,8 @@ import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:image_picker/image_picker.dart';
-
+import 'package:google_mlkit_face_detection/google_mlkit_face_detection.dart';
 import '../../../utils/Colors.dart';
 import '../components/BorderIcon.dart';
 import '../components/OptionButton.dart';
@@ -27,6 +26,7 @@ class _FaceDetectionState extends State<FaceDetection> {
       enableClassification: true,
     ),
   );
+  final _controller_result = TextEditingController();
   bool _canProcess = true;
   bool _isBusy = false;
   CustomPaint? _customPaint;
@@ -120,84 +120,88 @@ class _FaceDetectionState extends State<FaceDetection> {
                         style: TextStyle(
                           color: backgroundColor2,
                           fontSize: 25,
+                          fontFamily: "Poppins",
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
                     const Padding(padding: EdgeInsets.only(top: 35)),
-                    (_text != "")
-                        ? Row(
-                            children: [
-                              Expanded(child: Container()),
-                              const Spacer(),
-                              Flexible(
-                                  child: ElevatedButton(
-                                onPressed: () async {
-                                  await Clipboard.setData(
-                                      ClipboardData(text: _text));
-                                  final snackBar = SnackBar(
-                                    duration:
-                                        const Duration(milliseconds: 3000),
-                                    elevation: 0,
-                                    behavior: SnackBarBehavior.floating,
-                                    backgroundColor: Colors.transparent,
-                                    content: AwesomeSnackbarContent(
-                                      title: 'Copie',
-                                      message:
-                                          "L'intégrale du texte généré à été copié dans votre papier presse.",
-                                      contentType: ContentType.success,
-                                    ),
-                                  );
-                                  ScaffoldMessenger.of(context)
-                                    ..hideCurrentSnackBar()
-                                    ..showSnackBar(snackBar);
-                                },
-                                style: ButtonStyle(
-                                    backgroundColor: MaterialStateProperty.all(
-                                        backgroundColor2)),
-                                child: const Icon(Icons.copy_outlined),
-                              ))
-                            ],
-                          )
-                        : const Padding(padding: EdgeInsets.zero),
                     Padding(
                       padding: const EdgeInsets.only(top: 10),
                       child: Center(
-                        child: (_text != "")
-                            ? Container(
-                                padding: const EdgeInsets.fromLTRB(
-                                    12.5, 25, 12.5, 15),
-                                width: size.width * 0.90,
-                                decoration: BoxDecoration(
-                                  color: Colors.grey[50],
-                                  border: Border.all(
-                                      width: 0.25, color: backgroundColor2),
-                                  borderRadius: BorderRadius.circular(5),
-                                  boxShadow: const [
-                                    BoxShadow(
-                                      color: backgroundColor2,
-                                      offset: Offset(5.0, 2.5),
-                                      blurRadius: 15.0,
-                                      spreadRadius: 5.0,
-                                    ),
-                                    BoxShadow(
-                                      color: cardBackColor,
-                                      offset: Offset(5.0, 2.5),
-                                      blurRadius: 15.0,
-                                      spreadRadius: 10.0,
-                                    ),
-                                  ],
-                                ),
-                                child: SelectableText(
-                                  _text,
-                                  textAlign: TextAlign.justify,
-                                  style: const TextStyle(fontSize: 17),
-                                ),
-                              )
-                            : const SpinKitFadingCube(
+                          child: Stack(children: [
+                        Container(
+                          padding:
+                              const EdgeInsets.fromLTRB(12.5, 25, 12.5, 15),
+                          width: size.width * 0.90,
+                          decoration: BoxDecoration(
+                            color: Colors.grey[50],
+                            border: Border.all(
+                                width: 0.25, color: backgroundColor2),
+                            borderRadius: BorderRadius.circular(5),
+                            boxShadow: const [
+                              BoxShadow(
                                 color: backgroundColor2,
+                                offset: Offset(5.0, 2.5),
+                                blurRadius: 15.0,
+                                spreadRadius: 5.0,
                               ),
-                      ),
+                              BoxShadow(
+                                color: cardBackColor,
+                                offset: Offset(5.0, 2.5),
+                                blurRadius: 15.0,
+                                spreadRadius: 10.0,
+                              ),
+                            ],
+                          ),
+                          child: TextField(
+                            minLines: 10,
+                            maxLines: null,
+                            controller: _controller_result,
+                            keyboardType: TextInputType.multiline,
+                            style: const TextStyle(
+                                color: backgroundColor2,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14),
+                            decoration: const InputDecoration(
+                                alignLabelWithHint: true,
+                                labelText: 'Resultat',
+                                border: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: backgroundColor2, width: 1),
+                                    borderRadius: BorderRadius.only(
+                                      bottomLeft: Radius.circular(2.5),
+                                      bottomRight: Radius.circular(2.5),
+                                    ))),
+                          ),
+                        ),
+                        Positioned(
+                          right: 1,
+                          top: 15,
+                          child: IconButton(
+                            onPressed: () async {
+                              await Clipboard.setData(
+                                  ClipboardData(text: _text));
+                              final snackBar = SnackBar(
+                                duration: const Duration(milliseconds: 3000),
+                                elevation: 0,
+                                behavior: SnackBarBehavior.floating,
+                                backgroundColor: Colors.transparent,
+                                content: AwesomeSnackbarContent(
+                                  title: 'Copie',
+                                  message:
+                                      "L'intégrale du texte généré à été copié dans votre papier presse.",
+                                  contentType: ContentType.success,
+                                ),
+                              );
+                              ScaffoldMessenger.of(context)
+                                ..hideCurrentSnackBar()
+                                ..showSnackBar(snackBar);
+                            },
+                            icon: const Icon(Icons.copy_outlined),
+                          ),
+                        )
+                      ])),
                     ),
                     const Padding(padding: EdgeInsets.only(top: 100)),
                   ],
@@ -281,5 +285,6 @@ class _FaceDetectionState extends State<FaceDetection> {
     if (mounted) {
       setState(() {});
     }
+    _controller_result.text = _text;
   }
 }

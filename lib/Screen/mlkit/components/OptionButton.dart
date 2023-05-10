@@ -33,7 +33,9 @@ class OptionButton extends StatelessWidget {
               const Padding(padding: EdgeInsets.only(right: 5)),
               Text(
                 text,
-                style: const TextStyle(color: backgroundColorLight),
+                style: const TextStyle(color: backgroundColorLight,
+                  fontFamily: "Poppins",
+                ),
               )
             ],
           )),

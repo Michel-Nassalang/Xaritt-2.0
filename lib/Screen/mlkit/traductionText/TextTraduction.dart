@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_mlkit_translation/google_mlkit_translation.dart';
-
 import '../../../utils/Colors.dart';
 import '../components/BorderIcon.dart';
 import '../components/OptionButton.dart';
@@ -330,7 +329,7 @@ class _TextTraductionState extends State<TextTraduction> {
                             keyboardType: TextInputType.multiline,
                             style: const TextStyle(
                                 color: backgroundColor2,
-                                fontWeight: FontWeight.normal,
+                                fontWeight: FontWeight.bold,
                                 fontSize: 14),
                             decoration: const InputDecoration(
                                 alignLabelWithHint: true,
@@ -352,7 +351,8 @@ class _TextTraductionState extends State<TextTraduction> {
                           onPressed: _translateText,
                           child: const Text(
                             'Traduire',
-                            style: TextStyle(color: backgroundColor2),
+                            style: TextStyle(color: backgroundColor2,
+                              fontFamily: "Poppins",),
                           ))
                     ]),
                     Padding(

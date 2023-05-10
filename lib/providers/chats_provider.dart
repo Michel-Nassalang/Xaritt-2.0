@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 
 import '../models/chatgpt/chat_model.dart';
@@ -25,10 +27,6 @@ class ChatProvider with ChangeNotifier {
 
   Future<void> sendMessageAndGetImages({required String msg}) async {
     chatList.addAll(await ApiService.generateImage(msg));
-    notifyListeners();
-  }
-  Future<void> sendImageAndGetImages({required String imagepath}) async {
-    chatList.addAll(await ApiService.generateImageImage(imagepath));
     notifyListeners();
   }
 }

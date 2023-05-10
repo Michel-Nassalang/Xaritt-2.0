@@ -1,6 +1,7 @@
 import 'package:SmartFriend/Screen/gpt/chat_gpt_screen.dart';
 import 'package:SmartFriend/Screen/home/components/pageAI.dart';
 import 'package:SmartFriend/Screen/mlkit/detectFace/FaceDetection.dart';
+import 'package:SmartFriend/Screen/mlkit/detectInk/detect_Ink.dart';
 import 'package:SmartFriend/Screen/mlkit/detectObject/ObjectDetection.dart';
 import 'package:SmartFriend/Screen/mlkit/detectText/TextDetection.dart';
 import 'package:SmartFriend/Screen/mlkit/traductionText/TextTraduction.dart';
@@ -50,6 +51,7 @@ class _HomePageState extends State<HomePage> {
                           TextSpan(
                               text: "Un ami intelligent",
                               style: TextStyle(
+                                fontFamily: "Poppins",
                                 fontWeight: FontWeight.bold,
                               ))
                         ],
@@ -117,6 +119,38 @@ class _HomePageState extends State<HomePage> {
                                 title: 'Détextion de texte',
                                 message:
                                     "Cet outil permet la reconnaissance de texte à l'aide des caractères latins. Il analyse la structure du texte et réalise la détection des mots ou éléments, des lignes et des paragraphes",
+                                contentType: ContentType.help,
+                              ),
+                            );
+                            ScaffoldMessenger.of(context)
+                              ..hideCurrentSnackBar()
+                              ..showSnackBar(snackBar);
+                          },
+                        ),
+                        PageAi(
+                          image: "assets/images/inkdetection.png",
+                          title: "Reconnaissance de textes",
+                          auth: "IA-Texte",
+                          onPress: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return InkDetection();
+                                },
+                              ),
+                            );
+                          },
+                          onPressdetails: () {
+                            final snackBar = SnackBar(
+                              duration: const Duration(milliseconds: 5000),
+                              elevation: 0,
+                              behavior: SnackBarBehavior.floating,
+                              backgroundColor: Colors.transparent,
+                              content: AwesomeSnackbarContent(
+                                title: "Reconnaissance texte",
+                                message:
+                                    "Cet outil permet de reconnaitre toutes les écritures qui sont faits dans la base du language fondé sur le latin.",
                                 contentType: ContentType.help,
                               ),
                             );
@@ -212,14 +246,25 @@ class _HomePageState extends State<HomePage> {
                             ],
                           ),
                         ),
-                        bestOfTheDayCard(size, context),
+                        GestureDetector(
+                          onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) {
+                                    return const ChatGptScreen();
+                                  },
+                                ),
+                              );
+                            },
+                          child: bestOfTheDayCard(size, context)),
                         RichText(
                           text: const TextSpan(
                             style: TextStyle(),
                             children: [
                               TextSpan(text: "Outils: "),
                               TextSpan(
-                                text: "Kit Xam-Xam",
+                                text: "Mes favoris",
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
                             ],
@@ -259,7 +304,7 @@ class _HomePageState extends State<HomePage> {
                                                 CrossAxisAlignment.start,
                                             children: const <Widget>[
                                               Text(
-                                                "Xam-Xam",
+                                                "Favoris",
                                                 style: TextStyle(
                                                   fontWeight: FontWeight.bold,
                                                 ),
@@ -329,70 +374,60 @@ class _HomePageState extends State<HomePage> {
             bottom: 0,
             left: 0,
             right: 0,
-            child: GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return const ChatGptScreen();
-                    },
-                  ),
-                );
-              },
-              child: Container(
-                padding: EdgeInsets.only(
-                  left: 24,
-                  top: 24,
-                  right: size.width * .35,
-                ),
-                height: 230,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 221, 220, 220).withOpacity(.25),
-                  borderRadius: BorderRadius.circular(29),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Container(
-                      margin: const EdgeInsets.only(top: 10.0, bottom: 10.0),
-                      child: const Text(
-                        "Recupérer l'important dans nos informations",
-                        style: TextStyle(
-                          fontSize: 9,
-                          color: backgroundColorLight,
-                        ),
+            child: Container(
+              padding: EdgeInsets.only(
+                left: 24,
+                top: 24,
+                right: size.width * .35,
+              ),
+              height: 230,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: Color.fromARGB(255, 221, 220, 220).withOpacity(.25),
+                borderRadius: BorderRadius.circular(29),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Container(
+                    margin: const EdgeInsets.only(top: 10.0, bottom: 10.0),
+                    child: const Text(
+                      "Recupérer l'important dans nos informations",
+                      style: TextStyle(
+                        fontSize: 9,
+                        color: backgroundColorLight,
                       ),
                     ),
-                    const Text(
-                      "Gagner en productivité avec votre ami intelligent",
-                      style: TextStyle(),
+                  ),
+                  const Text(
+                    "Gagner en productivité avec votre ami intelligent",
+                    style: TextStyle(),
+                  ),
+                  const Text(
+                    "Xaritt 2.0",
+                    style: TextStyle(color: backgroundColorLight,
+                      fontFamily: "Poppins",
                     ),
-                    const Text(
-                      "Xaritt 2.0",
-                      style: TextStyle(color: backgroundColorLight),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, bottom: 10.0),
-                      child: Row(
-                        children: const <Widget>[
-                          Expanded(
-                            child: Text(
-                              "Demandez tous ce que vous voudrez et nous vous apporterons une réponse pertinente.",
-                              maxLines: 3,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                fontSize: 10,
-                                color: backgroundColorLight,
-                              ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10, bottom: 10.0),
+                    child: Row(
+                      children: const <Widget>[
+                        Expanded(
+                          child: Text(
+                            "Demandez tous ce que vous voudrez et nous vous apporterons une réponse pertinente.",
+                            maxLines: 3,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontSize: 10,
+                              color: backgroundColorLight,
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),

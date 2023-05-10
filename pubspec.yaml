@@ -35,8 +35,6 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   chat_gpt_sdk: ^2.0.0
-  google_ml_kit: ^0.13.0
-  edge_detection: ^1.1.1
   rive: ^0.10.2
   flutter_svg: ^1.0.3
   provider: ^6.0.5
@@ -45,6 +43,16 @@ dependencies:
   http: ^0.13.5
   image_picker: ^0.8.6+4
   awesome_snackbar_content: ^0.1.2
+  path_provider: ^2.0.13
+  image_gallery_saver: ^1.7.1
+  google_mlkit_face_detection: ^0.5.0
+  google_mlkit_translation: ^0.5.0
+  google_mlkit_text_recognition: ^0.5.0
+  google_mlkit_object_detection: ^0.6.0
+  google_mlkit_digital_ink_recognition: ^0.6.0
+  flutter_tts: ^3.6.3
+  sqflite: ^2.2.7
+  shared_preferences: ^2.1.0
 
 flutter_icons:
   android: "launcher_icon"
@@ -57,22 +65,10 @@ dev_dependencies:
     sdk: flutter
   flutter_launcher_icons: ^0.12.0
 
-  # The "flutter_lints" package below contains a set of recommended lints to
-  # encourage good coding practices. The lint set provided by the package is
-  # activated in the `analysis_options.yaml` file located at the root of your
-  # package. See that file for information about deactivating specific lint
-  # rules and activating additional ones.
   flutter_lints: ^2.0.0
 
-# For information on the generic Dart part of this file, see the
-# following page: https://dart.dev/tools/pub/pubspec
-
-# The following section is specific to Flutter packages.
 flutter:
 
-  # The following line ensures that the Material Icons font is
-  # included with your application, so that you can use the icons in
-  # the material Icons class.
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
@@ -97,12 +93,20 @@ flutter:
     - family: Intel
       fonts:
         - asset: assets/Fonts/Inter-Regular.ttf
-        - asset: assets/Fonts/Inter-SemiBold.ttf
           weight: 600
     - family: Poppins
       fonts:
         - asset: assets/Fonts/Poppins-Bold.ttf
+          weight: 600
+    - family: Roboto
+      fonts:
+        - asset: assets/Fonts/Roboto-Regular.ttf
           weight: 400
+    - family: OpenSans
+      fonts:
+        - asset: assets/Fonts/OpenSans-Regular.ttf
+          weight: 600
+          style: italic
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

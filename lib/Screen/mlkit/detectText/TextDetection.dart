@@ -4,9 +4,8 @@ import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:image_picker/image_picker.dart';
-
+import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import '../../../utils/Colors.dart';
 import '../components/BorderIcon.dart';
 import '../components/OptionButton.dart';
@@ -19,10 +18,10 @@ class TextDetection extends StatefulWidget {
 }
 
 class _TextDetectionState extends State<TextDetection> {
+  
+  final _controller_result = TextEditingController();
   bool textScanning = false;
-
   XFile? imageFile;
-
   String scannedText = "";
 
   @override
@@ -101,82 +100,88 @@ class _TextDetectionState extends State<TextDetection> {
                         style: TextStyle(
                           color: backgroundColor2,
                           fontSize: 25,
+                          fontFamily: "Poppins",
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
                     const Padding(padding: EdgeInsets.only(top: 35)),
-                    (scannedText != "")? 
-                    Row(
-                      children: [
-                        Expanded(child: Container()),
-                        const Spacer(),
-                        Flexible(child: ElevatedButton(onPressed: () async {
-                                    await Clipboard.setData(
-                                        ClipboardData(text: scannedText));
-                                    final snackBar = SnackBar(
-                                    duration: const Duration(milliseconds: 3000),
-                                    elevation: 0,
-                                    behavior: SnackBarBehavior.floating,
-                                    backgroundColor: Colors.transparent,
-                                    content: AwesomeSnackbarContent(
-                                      title: 'Copie',
-                                      message:
-                                          "L'intégrale du texte généré à été copié dans votre papier presse.",
-
-                                      contentType: ContentType.success,
-                                    ),
-                                  );
-                                  ScaffoldMessenger.of(context)
-                                    ..hideCurrentSnackBar()
-                                    ..showSnackBar(snackBar);
-                                    
-                                  },
-                                  style: ButtonStyle(backgroundColor: MaterialStateProperty.all(backgroundColor2)), 
-                                  child: const Icon(Icons.copy_outlined),
-                                  )
-                                )
-                      ],
-                    )
-                    : const Padding(padding: EdgeInsets.zero),
                     Padding(
                       padding: const EdgeInsets.only(top: 10),
                       child: Center(
-                        child: (scannedText != "")
-                            ? Container(
-                                padding:
-                                    const EdgeInsets.fromLTRB(12.5, 25, 12.5, 15),
-                                width: size.width * 0.90,
-                                decoration: BoxDecoration(
-                                  color: Colors.grey[50],
-                                  border: Border.all(
-                                      width: 0.25, color: backgroundColor2),
-                                  borderRadius: BorderRadius.circular(5),
-                                  boxShadow: const [
-                                    BoxShadow(
-                                      color: backgroundColor2,
-                                      offset: Offset(5.0, 2.5),
-                                      blurRadius: 15.0,
-                                      spreadRadius: 5.0,
-                                    ),
-                                    BoxShadow(
-                                      color: cardBackColor,
-                                      offset: Offset(5.0, 2.5),
-                                      blurRadius: 15.0,
-                                      spreadRadius: 10.0,
-                                    ),
-                                  ],
-                                ),
-                                child: SelectableText(
-                                  scannedText,
-                                  textAlign: TextAlign.justify,
-                                  style: const TextStyle(fontSize: 17),
-                                ),
-                              )
-                            : const SpinKitFadingCube(
+                          child: Stack(children: [
+                        Container(
+                          padding:
+                              const EdgeInsets.fromLTRB(12.5, 25, 12.5, 15),
+                          width: size.width * 0.90,
+                          decoration: BoxDecoration(
+                            color: Colors.grey[50],
+                            border: Border.all(
+                                width: 0.25, color: backgroundColor2),
+                            borderRadius: BorderRadius.circular(5),
+                            boxShadow: const [
+                              BoxShadow(
                                 color: backgroundColor2,
+                                offset: Offset(5.0, 2.5),
+                                blurRadius: 15.0,
+                                spreadRadius: 5.0,
                               ),
-                      ),
+                              BoxShadow(
+                                color: cardBackColor,
+                                offset: Offset(5.0, 2.5),
+                                blurRadius: 15.0,
+                                spreadRadius: 10.0,
+                              ),
+                            ],
+                          ),
+                          child: TextField(
+                            minLines: 10,
+                            maxLines: null,
+                            controller: _controller_result,
+                            keyboardType: TextInputType.multiline,
+                            style: const TextStyle(
+                                color: backgroundColor2,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14),
+                            decoration: const InputDecoration(
+                                alignLabelWithHint: true,
+                                labelText: 'Resultat',
+                                border: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: backgroundColor2, width: 1),
+                                    borderRadius: BorderRadius.only(
+                                      bottomLeft: Radius.circular(2.5),
+                                      bottomRight: Radius.circular(2.5),
+                                    ))),
+                          ),
+                        ),
+                        Positioned(
+                          right: 1,
+                          top: 15,
+                          child: IconButton(
+                            onPressed: () async {
+                              await Clipboard.setData(
+                                  ClipboardData(text: scannedText));
+                              final snackBar = SnackBar(
+                                duration: const Duration(milliseconds: 3000),
+                                elevation: 0,
+                                behavior: SnackBarBehavior.floating,
+                                backgroundColor: Colors.transparent,
+                                content: AwesomeSnackbarContent(
+                                  title: 'Copie',
+                                  message:
+                                      "L'intégrale du texte généré à été copié dans votre papier presse.",
+                                  contentType: ContentType.success,
+                                ),
+                              );
+                              ScaffoldMessenger.of(context)
+                                ..hideCurrentSnackBar()
+                                ..showSnackBar(snackBar);
+                            },
+                            icon: const Icon(Icons.copy_outlined),
+                          ),
+                        )
+                      ])),
                     ),
                     const Padding(padding: EdgeInsets.only(top: 100)),
                   ],
@@ -234,7 +239,7 @@ class _TextDetectionState extends State<TextDetection> {
 
   void getRecognisedText(XFile image) async {
     final inputImage = InputImage.fromFilePath(image.path);
-    final textDetector = GoogleMlKit.vision.textRecognizer();
+    final textDetector = TextRecognizer();
     RecognizedText recognisedText = await textDetector.processImage(inputImage);
     await textDetector.close();
     scannedText = "";
@@ -243,6 +248,7 @@ class _TextDetectionState extends State<TextDetection> {
         scannedText = scannedText + line.text + "\n";
       }
     }
+    _controller_result.text = scannedText;
     textScanning = false;
     setState(() {});
   }

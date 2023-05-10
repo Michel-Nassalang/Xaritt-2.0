@@ -28,7 +28,9 @@ class _SideBarState extends State<SideBar> {
           ),
         ),
         child: DefaultTextStyle(
-          style: const TextStyle(color: textColor),
+          style: const TextStyle(color: textColor, 
+            fontFamily: "Poppins",
+          ),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -44,7 +46,9 @@ class _SideBarState extends State<SideBar> {
                     style: Theme.of(context)
                         .textTheme
                         .titleMedium!
-                        .copyWith(color: textSubtitle),
+                        .copyWith(color: textSubtitle, 
+                          fontFamily: "Poppins",
+                        ),
                   ),
                 ),
                 ...sidebarMenus
@@ -70,7 +74,9 @@ class _SideBarState extends State<SideBar> {
                     style: Theme.of(context)
                         .textTheme
                         .titleMedium!
-                        .copyWith(color: textSubtitle),
+                        .copyWith(color: textSubtitle, 
+                          fontFamily: "Poppins",
+                        ),
                   ),
                 ),
                 ...sidebarMenus2

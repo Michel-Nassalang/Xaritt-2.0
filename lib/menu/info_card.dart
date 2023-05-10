@@ -24,7 +24,9 @@ class InfoCard extends StatelessWidget {
       ),
       title: Text(
         name,
-        style: const TextStyle(color: textColor),
+        style: const TextStyle(color: textColor,
+          fontFamily: "Poppins",
+        ),
       ),
       subtitle: Text(
         bio,

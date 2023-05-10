@@ -1,5 +1,6 @@
 import 'package:SmartFriend/utils/Colors.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'RoundedButton.dart';
     
@@ -20,6 +21,7 @@ class PageAi extends StatelessWidget {
     required this.onPress,
     required this.onPressdetails,
   }) : super(key: key);
+  
 
   @override
   Widget build(BuildContext context) {
@@ -69,25 +71,28 @@ class PageAi extends StatelessWidget {
               children: <Widget>[
                 IconButton(
                   icon: const Icon(
-                    Icons.travel_explore_outlined,
+                    Icons.favorite_border,
+                    color: Colors.blue,
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    // onLikePage(title);
+                  },
                 ),
               ],
             ),
           ),
           Positioned(
             top: 160,
-            child: Container(
+            child: SizedBox(
               height: 85,
-              width: 202,
+              width: 205,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   GestureDetector(
                     onTap: onPress,
                     child: Padding(
-                      padding: const EdgeInsets.only(left: 24),
+                      padding: const EdgeInsets.only(left: 20, top: 5),
                       child: RichText(
                         maxLines: 2,
                         text: TextSpan(
@@ -96,13 +101,15 @@ class PageAi extends StatelessWidget {
                             TextSpan(
                               text: "$title\n",
                               style: const TextStyle(
-                                fontWeight: FontWeight.bold,
+                                fontFamily: "Poppins",
+                                fontSize: 12
                               ),
                             ),
                             TextSpan(
                               text: auth,
                               style: const TextStyle(
                                 color: backgroundColor2,
+                                fontSize: 14
                               ),
                             ),
                           ],
@@ -138,4 +145,22 @@ class PageAi extends StatelessWidget {
       ),
     );
   }
+  // void onLikePage(String name) async {
+  //   var prefs = await SharedPreferences.getInstance();
+  //   bool? value = prefs.getBool(name);
+  //   if(value!= null){
+  //     prefs.setBool(name, !value);
+  //   }else{
+  //     prefs.setBool(name, true);
+  //   }
+  // }
+  // Future<bool> likePage(String name) async {
+  //   var prefs = await SharedPreferences.getInstance();
+  //   bool? value = prefs.getBool(name);
+  //   if (value != null) {
+  //     return prefs.setBool(name, !value);
+  //   } else {
+  //     return false;
+  //   }
+  // }
 }

@@ -5,12 +5,11 @@ import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../components/BorderIcon.dart';
 import '../components/OptionButton.dart';
-    
+
 class ObjectDetection extends StatefulWidget {
   const ObjectDetection({Key? key}) : super(key: key);
 
@@ -45,7 +44,9 @@ class _ObjectDetectionState extends State<ObjectDetection> {
                     Stack(
                       children: [
                         if (imageLabelChecking)
-                          const SpinKitFadingCube(color: backgroundColor2,),
+                          const SpinKitFadingCube(
+                            color: backgroundColor2,
+                          ),
                         if (!imageLabelChecking && imageFile == null)
                           Container(
                             width: size.width,
@@ -95,11 +96,16 @@ class _ObjectDetectionState extends State<ObjectDetection> {
                       padding: EdgeInsets.all(15),
                       child: Text(
                         "Description",
-                        style: TextStyle(color: backgroundColor2, fontSize: 25, fontWeight: FontWeight.bold,),
+                        style: TextStyle(
+                          color: backgroundColor2,
+                          fontFamily: "Poppins",
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
-                   const Padding(padding: EdgeInsets.only(top: 35)),
-                   (imageLabel != "")
+                    const Padding(padding: EdgeInsets.only(top: 35)),
+                    (imageLabel != "")
                         ? Row(
                             children: [
                               Expanded(child: Container()),
@@ -110,7 +116,8 @@ class _ObjectDetectionState extends State<ObjectDetection> {
                                   await Clipboard.setData(
                                       ClipboardData(text: imageLabel));
                                   final snackBar = SnackBar(
-                                    duration: const Duration(milliseconds: 3000),
+                                    duration:
+                                        const Duration(milliseconds: 3000),
                                     elevation: 0,
                                     behavior: SnackBarBehavior.floating,
                                     backgroundColor: Colors.transparent,
@@ -123,8 +130,7 @@ class _ObjectDetectionState extends State<ObjectDetection> {
                                   );
                                   ScaffoldMessenger.of(context)
                                     ..hideCurrentSnackBar()
-                                    ..showSnackBar(snackBar); 
-                                    
+                                    ..showSnackBar(snackBar);
                                 },
                                 style: ButtonStyle(
                                     backgroundColor: MaterialStateProperty.all(
@@ -137,16 +143,17 @@ class _ObjectDetectionState extends State<ObjectDetection> {
                     Padding(
                       padding: const EdgeInsets.only(top: 10),
                       child: Center(
-                        child: (imageLabel != "") ? 
-                        Container
-                        (
-                          padding: const EdgeInsets.fromLTRB(5,10,5,10),
-                          width: size.width * 0.90,
-                          decoration: BoxDecoration(
-                            color: Colors.grey[50],
-                            border: Border.all(width: 1, color: backgroundColor2),
-                            borderRadius: BorderRadius.circular(5),
-                            boxShadow: const [
+                        child: (imageLabel != "")
+                            ? Container(
+                                padding:
+                                    const EdgeInsets.fromLTRB(5, 10, 5, 10),
+                                width: size.width * 0.90,
+                                decoration: BoxDecoration(
+                                  color: Colors.grey[50],
+                                  border: Border.all(
+                                      width: 1, color: backgroundColor2),
+                                  borderRadius: BorderRadius.circular(5),
+                                  boxShadow: const [
                                     BoxShadow(
                                       color: backgroundColor2,
                                       offset: Offset(25.0, 15.0),
@@ -160,14 +167,16 @@ class _ObjectDetectionState extends State<ObjectDetection> {
                                       spreadRadius: 10.0,
                                     ),
                                   ],
-                          ),
-                          child: Text(
-                            imageLabel,
-                            textAlign: TextAlign.justify,
-                            style: const TextStyle(fontSize: 18),
-                          ),
-                        )
-                        : const SpinKitFadingCube(color: backgroundColor2,),
+                                ),
+                                child: Text(
+                                  imageLabel,
+                                  textAlign: TextAlign.justify,
+                                  style: const TextStyle(fontSize: 18),
+                                ),
+                              )
+                            : const SpinKitFadingCube(
+                                color: backgroundColor2,
+                              ),
                       ),
                     ),
                     const Padding(padding: EdgeInsets.only(top: 100)),
@@ -206,6 +215,7 @@ class _ObjectDetectionState extends State<ObjectDetection> {
       ),
     );
   }
+
   void getImage(ImageSource source) async {
     try {
       final pickedImage = await ImagePicker().pickImage(source: source);
@@ -224,22 +234,22 @@ class _ObjectDetectionState extends State<ObjectDetection> {
   }
 
   void getImageLabels(XFile image) async {
-    final inputImage = InputImage.fromFilePath(image.path);
-    ImageLabeler imageLabeler =
-        ImageLabeler(options: ImageLabelerOptions(confidenceThreshold: 0.75));
-    List<ImageLabel> labels = await imageLabeler.processImage(inputImage);
-    StringBuffer sb = StringBuffer();
-    for (ImageLabel imgLabel in labels) {
-      String lblText = imgLabel.label;
-      double confidence = imgLabel.confidence;
-      sb.write(lblText);
-      sb.write(" : ");
-      sb.write((confidence * 100).toStringAsFixed(2));
-      sb.write("%\n");
-    }
-    imageLabeler.close();
-    imageLabel = sb.toString();
-    imageLabelChecking = false;
-    setState(() {});
+    // final inputImage = InputImage.fromFilePath(image.path);
+    // ImageLabeler imageLabeler =
+    //     ImageLabeler(options: ImageLabelerOptions(confidenceThreshold: 0.75));
+    // List<ImageLabel> labels = await imageLabeler.processImage(inputImage);
+    // StringBuffer sb = StringBuffer();
+    // for (ImageLabel imgLabel in labels) {
+    //   String lblText = imgLabel.label;
+    //   double confidence = imgLabel.confidence;
+    //   sb.write(lblText);
+    //   sb.write(" : ");
+    //   sb.write((confidence * 100).toStringAsFixed(2));
+    //   sb.write("%\n");
+    // }
+    // imageLabeler.close();
+    // imageLabel = sb.toString();
+    // imageLabelChecking = false;
+    // setState(() {});
   }
 }

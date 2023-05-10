@@ -1,5 +1,4 @@
 import 'package:SmartFriend/Screen/startApp/AnimatePage.dart';
-import 'package:SmartFriend/Screen/startApp/StartPage.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -17,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         scaffoldBackgroundColor: const Color(0xFFEEF1F8),
         primarySwatch: Colors.grey,
-        fontFamily: "Poppins",
+        fontFamily: "OpenSans",
         inputDecorationTheme: const InputDecorationTheme(
           filled: true,
           fillColor: Colors.white,
