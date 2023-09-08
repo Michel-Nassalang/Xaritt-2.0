@@ -1,6 +1,6 @@
 # smartfriend
 
-A new Flutter project.
+Xaritt 2.0 est une application mobile utilisant l'intelligence artificelle pour faciliter la recherche et les saisies textuelles, traductions et analyse & receuil de texte.
 
 ## Getting Started
 
